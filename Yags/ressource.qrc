@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>ICO_Home.gif</file>
+        <file>quitter.png</file>
+        <file>open.png</file>
+        <file>save.png</file>
+        <file>save_as.png</file>
+        <file>zoom_in.png</file>
+        <file>zoom_out.png</file>
+    </qresource>
+</RCC>
