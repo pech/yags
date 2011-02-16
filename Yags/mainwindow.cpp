@@ -7,6 +7,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect(ui->actionEnregistrer_sous, SIGNAL(enabled()), this, SLOT(on_actionEnregistrer_sous_triggered()));
+
     imageLabel = new QLabel;
     imageLabel->setBackgroundRole(QPalette::Dark);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
@@ -51,6 +53,8 @@ void MainWindow::on_actionOuvrir_triggered()
         imageLabel->setPixmap(QPixmap::fromImage(image));
         imageLabel->resize(imageLabel->pixmap()->size());
         scaleFactor = 1.0;
+        //QAction *actionEnregistrer_sous = new QAction(tr("&Enregistrer sous"), this);
+        this->ui->actionEnregistrer_sous->setEnabled(true);
     }
 }
 
@@ -72,6 +76,7 @@ void MainWindow::scaleImage(double factor)
 void MainWindow::on_actionZoom_Avant_triggered()
 {
     scaleImage(1.25);
+
 }
 
 void MainWindow::on_actionZoom_Arri_re_triggered()
@@ -269,3 +274,5 @@ void MainWindow::on_actionA_propos_triggered()
                                                          "<p>Copyright &copy; 2011</p>"
                                                          "<p> Promo-2012 <br> Enjoy !!!</p>"));
 }
+
+

@@ -149,7 +149,7 @@
   </action>
   <action name="actionEnregistrer_sous">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="ressource.qrc">
