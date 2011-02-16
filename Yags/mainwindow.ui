@@ -112,6 +112,7 @@
    <addaction name="actionOuvrir"/>
    <addaction name="actionEnregisrer"/>
    <addaction name="actionEnregistrer_sous"/>
+   <addaction name="separator"/>
    <addaction name="actionZoom_Avant"/>
    <addaction name="actionZoom_Arri_re"/>
   </widget>
@@ -137,7 +138,7 @@
   </action>
   <action name="actionEnregisrer">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="ressource.qrc">
@@ -188,7 +189,7 @@
   </action>
   <action name="actionZoom_Avant">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="ressource.qrc">
@@ -203,7 +204,7 @@
   </action>
   <action name="actionZoom_Arri_re">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="ressource.qrc">

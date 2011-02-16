@@ -12,6 +12,7 @@
 #include <QList>
 #include <QWidget>
 #include <QGridLayout>
+#include <QWheelEvent>
 
 namespace Ui {
     class MainWindow;
@@ -29,6 +30,8 @@ private:
     Ui::MainWindow *ui;
     void scaleImage(double factor);
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
+
+    void wheelEvent(QWheelEvent *event);
 
     double scaleFactor;
     QLabel *imageLabel;
