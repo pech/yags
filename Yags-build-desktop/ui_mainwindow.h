@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu 10. Feb 19:26:04 2011
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Thu 24. Feb 23:57:00 2011
+**      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -70,11 +70,13 @@ public:
         actionOuvrir->setIcon(icon1);
         actionEnregisrer = new QAction(MainWindow);
         actionEnregisrer->setObjectName(QString::fromUtf8("actionEnregisrer"));
+        actionEnregisrer->setEnabled(false);
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/save.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionEnregisrer->setIcon(icon2);
         actionEnregistrer_sous = new QAction(MainWindow);
         actionEnregistrer_sous->setObjectName(QString::fromUtf8("actionEnregistrer_sous"));
+        actionEnregistrer_sous->setEnabled(false);
         QIcon icon3;
         icon3.addFile(QString::fromUtf8(":/save_as.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionEnregistrer_sous->setIcon(icon3);
@@ -91,11 +93,13 @@ public:
         actionGaussien->setObjectName(QString::fromUtf8("actionGaussien"));
         actionZoom_Avant = new QAction(MainWindow);
         actionZoom_Avant->setObjectName(QString::fromUtf8("actionZoom_Avant"));
+        actionZoom_Avant->setEnabled(false);
         QIcon icon5;
         icon5.addFile(QString::fromUtf8(":/zoom_in.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionZoom_Avant->setIcon(icon5);
         actionZoom_Arri_re = new QAction(MainWindow);
         actionZoom_Arri_re->setObjectName(QString::fromUtf8("actionZoom_Arri_re"));
+        actionZoom_Arri_re->setEnabled(false);
         QIcon icon6;
         icon6.addFile(QString::fromUtf8(":/zoom_out.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionZoom_Arri_re->setIcon(icon6);
@@ -131,6 +135,7 @@ public:
         MainWindow->setStatusBar(statusBar);
         toolBar = new QToolBar(MainWindow);
         toolBar->setObjectName(QString::fromUtf8("toolBar"));
+        toolBar->setEnabled(true);
         MainWindow->addToolBar(Qt::TopToolBarArea, toolBar);
 
         menuBar->addAction(menuFichier->menuAction());
@@ -160,6 +165,7 @@ public:
         toolBar->addAction(actionOuvrir);
         toolBar->addAction(actionEnregisrer);
         toolBar->addAction(actionEnregistrer_sous);
+        toolBar->addSeparator();
         toolBar->addAction(actionZoom_Avant);
         toolBar->addAction(actionZoom_Arri_re);
 
