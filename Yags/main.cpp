@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
         if(!db.open())
         {
-            QMessageBox::critical(0, QObject::tr("Database Error"), db.lastError().text());
+            //QMessageBox::critical(0, QObject::tr("Database Error"), db.lastError().text());
         }
 
 
