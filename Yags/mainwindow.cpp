@@ -230,36 +230,34 @@ void MainWindow::on_actionGaussien_triggered()
     g_photo_orig = new QLabel(tr("Photo Origine"));
     g_photo_orig->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
     g_photo_orig->setPixmap(QPixmap::fromImage(image));
-
     g_filter_gaussien = new QLabel(tr("Filtre gaussien"));
     g_filter_gaussien->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     g_filter_gaussien->setPixmap(QPixmap::fromImage(image));
-
-    QRgb c[9];
+    QRgb c;
     int rgauss;
     int ggauss;
     int bgauss;
-
        for(int i =1; i < image.width()-1; ++i) // parcours de l'image sans le contour.
           for(int j =1; j < image.height()-1; ++j) {
-           int val = 0;
+           rgauss=0;ggauss=0;bgauss=0;
              for (int k=0;k<3;k++)
                   for (int l=0;l<3;l++)
                  {
-                   c[val] = image.pixel(i+k-1,j+l-1);
-                   val++;
+                    c = image.pixel(i+k-1,j+l-1);
+                    rgauss+=qRed(c);
+                    ggauss+=qGreen(c);
+                    bgauss+=qBlue(c);
                  }
-
-             rgauss=(qRed(c[0])+2*qRed(c[1])+qRed(c[2])+2*qRed(c[3])+4*qRed(c[4])+2*qRed(c[5])+qRed(c[6])+2*qRed(c[7])+qRed(c[8]))/9;
-             ggauss=(qGreen(c[0])+2*qGreen(c[1])+qGreen(c[2])+2*qGreen(c[3])+4*qGreen(c[4])+2*qGreen(c[5])+qGreen(c[6])+2*qGreen(c[7])+qGreen(c[8]))/9;
-             bgauss=(qBlue(c[0])+2*qBlue(c[1])+qBlue(c[2])+2*qBlue(c[3])+4*qBlue(c[4])+2*qBlue(c[5])+qBlue(c[6])+2*qBlue(c[7])+qBlue(c[8]))/9;
-
+             c = image.pixel(i,j);
+             rgauss+=qRed(c);
+             ggauss+=qGreen(c);
+             bgauss+=qBlue(c);
+             rgauss/=10;
+             ggauss/=10;
+             bgauss/=10;
              image.setPixel(i,j,qRgb(rgauss,ggauss,bgauss));
           }
-
        g_filter_gaussien->setPixmap(QPixmap::fromImage(image));
-
-
     g_layout = new QGridLayout(g_zoneCentral);
     g_layout->addWidget(g_photo_orig, 1, 0, 1, 2);
     g_layout->addWidget(g_filter_gaussien, 1, 2, 1, 2);

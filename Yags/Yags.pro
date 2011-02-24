@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += sql
 
 TARGET = Yags
 TEMPLATE = app
