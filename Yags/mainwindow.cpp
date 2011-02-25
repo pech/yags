@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+//#include "ScrollArea.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -6,16 +7,39 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    zoom_active = false;
+
+    view = new QGraphicsView(ui->centralWidget);
+    scene = new QGraphicsScene(QRect(0, 0, 400*2, 200*2));
+    view->setScene(scene);
+    view->setGeometry(QRect(0, 0, 400*2, 200*2));
+    view->setDragMode(QGraphicsView::ScrollHandDrag);
+
+    view->setFocusPolicy(Qt::NoFocus);
+
+    view->show();
 
     imageLabel = new QLabel;
     imageLabel->setBackgroundRole(QPalette::Dark);
     imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     imageLabel->setScaledContents(true);
 
+    scene->addWidget(imageLabel);
+
+    //verticalScrollBar()->installEventFilter(this);
+    //horizontalScrollBar()->installEventFilter(this);
     scrollArea = new QScrollArea;
     scrollArea->setBackgroundRole(QPalette::Dark);
-    scrollArea->setWidget(imageLabel);
+
+    scrollArea->verticalScrollBar()->setEnabled(false);
+    scrollArea->horizontalScrollBar()->setEnabled(false);
+
+    scrollArea->setWidget(view);
+
+
     setCentralWidget(scrollArea);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -27,6 +51,8 @@ void MainWindow::on_actionQuitter_triggered()
 {
     close();
 }
+
+
 
 void MainWindow::on_actionOuvrir_triggered()
 {
@@ -48,6 +74,7 @@ void MainWindow::on_actionOuvrir_triggered()
             return;
         }
 
+        zoom_active = true;
         imageLabel->setPixmap(QPixmap::fromImage(image));
         imageLabel->resize(imageLabel->pixmap()->size());
         scaleFactor = 1.0;
@@ -55,6 +82,12 @@ void MainWindow::on_actionOuvrir_triggered()
         this->ui->actionEnregisrer->setEnabled(true);
         this->ui->actionZoom_Arri_re->setEnabled(true);
         this->ui->actionZoom_Avant->setEnabled(true);
+        //scrollArea->verticalScrollBar()->setEnabled(false);
+        //scrollArea->horizontalScrollBar()->setEnabled(false);
+        //QAbstractScrollArea::setVerticalScrollBarPolicy(verticalScrollBar);
+        scrollArea->verticalScrollBar()->installEventFilter(this);
+
+
     }
 }
 
@@ -275,9 +308,30 @@ void MainWindow::on_actionA_propos_triggered()
 
 void MainWindow::wheelEvent(QWheelEvent *event)
 {
-    if(event->delta()>0)
-        scaleImage(1.25);
-    else
-        scaleImage(0.8);
+    if (zoom_active == true) {
+
+        if(event->delta()>0)
+            scaleImage(1.25);
+        else
+            scaleImage(0.8);
+    }
+}
+
+bool MainWindow::eventFilter(QObject * obj, QEvent * event)
+{
+  if (event->type() == QEvent::Wheel) {
+      if (zoom_active == true) {
+          //if (event->)
+          //if(event->delta()>0)
+                      scaleImage(1.25);
+          //        else
+          //            scaleImage(0.8);
+                  } else {
+                       scaleImage(0.8);
+                  }
+       return true;
+  } else {
+    return MainWindow::eventFilter(obj, event);
+  }
 }
 

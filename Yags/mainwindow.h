@@ -13,6 +13,10 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QWheelEvent>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+
+#include <QEvent>
 
 namespace Ui {
     class MainWindow;
@@ -26,6 +30,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    bool zoom_active;
+
 private:
     Ui::MainWindow *ui;
     void scaleImage(double factor);
@@ -34,6 +40,8 @@ private:
     void wheelEvent(QWheelEvent *event);
 
     double scaleFactor;
+
+
     QLabel *imageLabel;
     QScrollArea *scrollArea;
     QImage image;
@@ -44,7 +52,11 @@ private:
     QLabel *g_filter_moyen;
     QLabel *g_filter_gaussien;
 
+    QGraphicsView *view;
+    QGraphicsScene *scene;
 
+    bool eventFilter(QObject * obj, QEvent * event);
+    //bool eventFilter(QObject *obj, QWheelEvent *event);
 
 private slots:
     void on_actionGaussien_triggered();
@@ -59,3 +71,4 @@ private slots:
 };
 
 #endif // MAINWINDOW_H
+
