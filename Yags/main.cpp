@@ -50,7 +50,20 @@ int main(int argc, char *argv[])
                    "'<qt>Research Station<br/>Base Camp<br/>"
                    "Big Mountain</qt>', 103)");
 
-    //w.setWindowState(w.windowState() ^ Qt::WindowMaximized);
+
+            query.exec("create table user (id int primary key, "
+                       "login varchar(20), password varchar(20), address varchar(200), typeid int)");
+            query.exec("insert into user values(1, 'Alice', 'alice', "
+                       "'<qt>Alice@gmail.com', 101)");
+            query.exec("insert into user values(2, 'Bob', 'bob', "
+                       "'<qt>Bob@gmail.com', 102)");
+            query.exec("insert into user values(3, 'Carol', 'carol', "
+                       "'<qt>The Lighthouse</qt>', 103)");
+            query.exec("insert into user values(4, 'Donald', 'donald', "
+                       "'Donald@gmail.com', 101)");
+            query.exec("insert into person values(5, 'Emma', 'emma', "
+                       "'<qt>Emma@gmail.com</qt>', 103)");
+
 
     fen.show();
 

@@ -87,8 +87,6 @@ void MainWindow::on_actionOuvrir_triggered()
         //scrollArea->horizontalScrollBar()->setEnabled(false);
         //QAbstractScrollArea::setVerticalScrollBarPolicy(verticalScrollBar);
         //scrollArea->verticalScrollBar()->installEventFilter(this);
-
-
     }
 }
 

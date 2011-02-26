@@ -19,6 +19,7 @@ private:
     Ui::LoginWindowDialog *ui;
 
 private slots:
+    //void on_loginLineEdit_textChanged(QString );
     void on_pushButton_clicked();
 };
 
