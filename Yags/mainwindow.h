@@ -75,11 +75,14 @@ private:
     QDialog *loginFenetre;
     QDialog *loginFenetreResultat;
 
+    QSqlDatabase db;
+
 
     bool eventFilter(QObject * obj, QEvent * event);
     //bool eventFilter(QObject *obj, QWheelEvent *event);
 
 private slots:
+    void on_actionSe_d_connecter_triggered();
     void on_actionSeconnecter_triggered();
     void on_actionGaussien_triggered();
     void on_actionMoyen_triggered();

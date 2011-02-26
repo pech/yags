@@ -127,6 +127,9 @@
    </property>
   </action>
   <action name="actionOuvrir">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="ressource.qrc">
      <normaloff>:/open.png</normaloff>:/open.png</iconset>

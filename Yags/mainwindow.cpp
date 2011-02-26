@@ -23,39 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
         scrollArea->setWidget(imageLabel);
         setCentralWidget(scrollArea);
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
-
-    //db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mbd)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
-    db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mdb)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
-
-    if ( !db.open() ) {
-        QMessageBox::critical(0, qApp->tr("Cannot open database"),
-             qApp->tr("Unable to establish a database connection.n"
-                      "This example needs SQLite support. Please read "
-                      "the Qt SQL driver documentation for information how "
-                      "to build it.nn"
-                      "Click Cancel to exit."), QMessageBox::Cancel,
-                      QMessageBox::NoButton);
-             qDebug() << db.lastError();
-         //return false;
-    }
-
-    // test query
-
-    QSqlQuery query;
-
-    //        query.exec("create table user2 (id int primary key, "
-    //                   "login varchar(20), password varchar(20), address varchar(200), typeid int)");
-    //        query.exec("insert into user2 values(1, 'Alice', 'alice', "
-    //                   "'<qt>Alice@gmail.com', 101)");
-    //        query.exec("insert into user2 values(2, 'Bob', 'bob', "
-    //                   "'<qt>Bob@gmail.com', 102)");
-    //        query.exec("insert into user2 values(3, 'Carol', 'carol', "
-    //                   "'<qt>The Lighthouse</qt>', 103)");
-    //        query.exec("insert into user2 values(4, 'Donald', 'donald', "
-    //                   "'Donald@gmail.com', 101)");
-     //       query.exec("insert into user2 values(5, 'Emma', 'emma', "
-    //                   "'<qt>Emma@gmail.com</qt>', 103)");
 
 
                     loginBox = new QLineEdit;
@@ -377,6 +344,7 @@ void MainWindow::connection()
 {
     QHBoxLayout *layout = new QHBoxLayout;
     QLabel *label = new QLabel;
+    //QLabel *label2 = new QLabel;
     QPushButton *button = new QPushButton;
 
     QSqlTableModel model;
@@ -385,25 +353,29 @@ void MainWindow::connection()
     model.setFilter("login = '"+loginBox->text()+"' and password = '"+passwordBox->text()+"'");
     model.select();
 
-     QMessageBox::information(this, tr("info"), loginBox->text() + " " + passwordBox->text() + " " + QString::number(model.rowCount()));
+    int numrow = model.rowCount();
 
-     if (model.rowCount() > 0 ) {
+     QMessageBox::information(this, tr("info"), loginBox->text() + " " + passwordBox->text() + " " + QString::number(numrow));
+
+     if ((model.rowCount()) > 0 ) {
         isLog = true;
-        layout->addWidget(label);
-        label->setText("Connection reussie");
-        layout->addWidget(button);
-        button->setText("Ok");
+        //label->setText("Connection reussie");
+        //button->setText("Ok");
         connect(button, SIGNAL(clicked()), this, SLOT(closeLoginFenetre()));
         this->ui->actionSe_d_connecter->setEnabled(true);
         this->ui->actionSeconnecter->setEnabled(false);
+        //label->setText("");
     }
     else {
-       layout->addWidget(label);
-        label->setText("Echec connection");
-        layout->addWidget(button);
-        button->setText("Reessayer");
+
+        //label->setText("Echec connection");
+        //layout->addWidget(label);
+        //layout->addWidget(button);
+        //button->setText("Reessayer");
         connect(button, SIGNAL(clicked()), this, SLOT(on_actionSeconnecter_triggered()));
     }
+    layout->addWidget(label);
+    layout->addWidget(button);
 
     loginFenetre->hide();
     loginFenetreResultat->setLayout(layout);
@@ -421,8 +393,52 @@ void MainWindow::closeLoginFenetre() {
 
 void MainWindow::on_actionSeconnecter_triggered()
 {
+    db = QSqlDatabase::addDatabase("QODBC");
+
+    //db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mbd)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
+    db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mdb)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
+
+    if ( !db.open() ) {
+        QMessageBox::critical(0, qApp->tr("Cannot open database"),
+             qApp->tr("Unable to establish a database connection.n"
+                      "This example needs SQLite support. Please read "
+                      "the Qt SQL driver documentation for information how "
+                      "to build it.nn"
+                      "Click Cancel to exit."), QMessageBox::Cancel,
+                      QMessageBox::NoButton);
+             qDebug() << db.lastError();
+         //return false;
+    }
+
+
+    // test query
+
+    //QSqlQuery query;
+
+    //        query.exec("create table user2 (id int primary key, "
+    //                   "login varchar(20), password varchar(20), address varchar(200), typeid int)");
+    //        query.exec("insert into user2 values(1, 'Alice', 'alice', "
+    //                   "'<qt>Alice@gmail.com', 101)");
+    //        query.exec("insert into user2 values(2, 'Bob', 'bob', "
+    //                   "'<qt>Bob@gmail.com', 102)");
+    //        query.exec("insert into user2 values(3, 'Carol', 'carol', "
+    //                   "'<qt>The Lighthouse</qt>', 103)");
+    //        query.exec("insert into user2 values(4, 'Donald', 'donald', "
+    //                   "'Donald@gmail.com', 101)");
+     //       query.exec("insert into user2 values(5, 'Emma', 'emma', "
+    //                   "'<qt>Emma@gmail.com</qt>', 103)");
+
     loginFenetreResultat->hide();
     loginBox->setText("");
     passwordBox->setText("");
     loginFenetre->show();
+    this->ui->actionOuvrir->setEnabled(true);
+}
+
+void MainWindow::on_actionSe_d_connecter_triggered()
+{
+    db.close();
+    this->ui->actionSe_d_connecter->setEnabled(false);
+    this->ui->actionSeconnecter->setEnabled(true);
+    this->ui->actionOuvrir->setEnabled(false);
 }

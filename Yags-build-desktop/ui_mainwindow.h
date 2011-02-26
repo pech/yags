@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat 26. Feb 22:27:01 2011
+** Created: Sat 26. Feb 23:15:56 2011
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -67,6 +67,7 @@ public:
         actionSeconnecter->setEnabled(true);
         actionOuvrir = new QAction(MainWindow);
         actionOuvrir->setObjectName(QString::fromUtf8("actionOuvrir"));
+        actionOuvrir->setEnabled(false);
         QIcon icon1;
         icon1.addFile(QString::fromUtf8(":/open.png"), QSize(), QIcon::Normal, QIcon::Off);
         actionOuvrir->setIcon(icon1);
