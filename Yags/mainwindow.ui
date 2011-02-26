@@ -69,6 +69,7 @@
     <property name="title">
      <string>Option</string>
     </property>
+    <addaction name="actionConnect_SQL"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
     <property name="title">
@@ -225,6 +226,11 @@
   <action name="actionA_propos">
    <property name="text">
     <string>A propos...</string>
+   </property>
+  </action>
+  <action name="actionConnect_SQL">
+   <property name="text">
+    <string>Connect SQL</string>
    </property>
   </action>
  </widget>

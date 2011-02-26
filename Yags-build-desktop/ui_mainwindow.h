@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu 24. Feb 23:57:00 2011
+** Created: Sat 26. Feb 16:32:37 2011
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,6 +39,7 @@ public:
     QAction *actionZoom_Arri_re;
     QAction *actionAide;
     QAction *actionA_propos;
+    QAction *actionConnect_SQL;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFichier;
@@ -107,6 +108,8 @@ public:
         actionAide->setObjectName(QString::fromUtf8("actionAide"));
         actionA_propos = new QAction(MainWindow);
         actionA_propos->setObjectName(QString::fromUtf8("actionA_propos"));
+        actionConnect_SQL = new QAction(MainWindow);
+        actionConnect_SQL->setObjectName(QString::fromUtf8("actionConnect_SQL"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -155,6 +158,7 @@ public:
         menuFiltre->addAction(actionMedian);
         menuFiltre->addAction(actionMoyen);
         menuFiltre->addAction(actionGaussien);
+        menuOption->addAction(actionConnect_SQL);
         menuAffichage->addAction(actionZoom_Avant);
         menuAffichage->addAction(actionZoom_Arri_re);
         menuAide->addAction(actionAide);
@@ -196,6 +200,7 @@ public:
         actionZoom_Arri_re->setShortcut(QApplication::translate("MainWindow", "-", 0, QApplication::UnicodeUTF8));
         actionAide->setText(QApplication::translate("MainWindow", "Aide", 0, QApplication::UnicodeUTF8));
         actionA_propos->setText(QApplication::translate("MainWindow", "A propos...", 0, QApplication::UnicodeUTF8));
+        actionConnect_SQL->setText(QApplication::translate("MainWindow", "Connect SQL", 0, QApplication::UnicodeUTF8));
         menuFichier->setTitle(QApplication::translate("MainWindow", "&Fichier", 0, QApplication::UnicodeUTF8));
         menuEdition->setTitle(QApplication::translate("MainWindow", "Edition", 0, QApplication::UnicodeUTF8));
         menuVue->setTitle(QApplication::translate("MainWindow", "Vue", 0, QApplication::UnicodeUTF8));

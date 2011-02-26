@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'fenlogin.ui'
 **
-** Created: Sat 26. Feb 09:28:22 2011
+** Created: Sat 26. Feb 14:42:44 2011
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,50 +14,44 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QDialog>
+#include <QtGui/QDialogButtonBox>
 #include <QtGui/QHeaderView>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_fenlogin
 {
 public:
-    QMenuBar *menubar;
-    QWidget *centralwidget;
-    QStatusBar *statusbar;
+    QDialogButtonBox *buttonBox;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QDialog *fenlogin)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(800, 600);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
-        MainWindow->setMenuBar(menubar);
-        centralwidget = new QWidget(MainWindow);
-        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        MainWindow->setCentralWidget(centralwidget);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
+        if (fenlogin->objectName().isEmpty())
+            fenlogin->setObjectName(QString::fromUtf8("fenlogin"));
+        fenlogin->resize(406, 304);
+        buttonBox = new QDialogButtonBox(fenlogin);
+        buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        buttonBox->setGeometry(QRect(30, 240, 341, 32));
+        buttonBox->setOrientation(Qt::Horizontal);
+        buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
 
-        retranslateUi(MainWindow);
+        retranslateUi(fenlogin);
+        QObject::connect(buttonBox, SIGNAL(accepted()), fenlogin, SLOT(accept()));
+        QObject::connect(buttonBox, SIGNAL(rejected()), fenlogin, SLOT(reject()));
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(fenlogin);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QDialog *fenlogin)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        fenlogin->setWindowTitle(QApplication::translate("fenlogin", "Dialog", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class fenlogin: public Ui_fenlogin {};
 } // namespace Ui
 
 QT_END_NAMESPACE

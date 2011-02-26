@@ -59,6 +59,7 @@ private:
     //bool eventFilter(QObject *obj, QWheelEvent *event);
 
 private slots:
+    void on_actionConnect_SQL_triggered();
     void on_actionGaussien_triggered();
     void on_actionMoyen_triggered();
     void on_actionA_propos_triggered();

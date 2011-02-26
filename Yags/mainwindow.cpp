@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 //#include "ScrollArea.h"
 #include "ui_mainwindow.h"
+#include "loginwindowdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -85,7 +86,7 @@ void MainWindow::on_actionOuvrir_triggered()
         //scrollArea->verticalScrollBar()->setEnabled(false);
         //scrollArea->horizontalScrollBar()->setEnabled(false);
         //QAbstractScrollArea::setVerticalScrollBarPolicy(verticalScrollBar);
-        scrollArea->verticalScrollBar()->installEventFilter(this);
+        //scrollArea->verticalScrollBar()->installEventFilter(this);
 
 
     }
@@ -335,3 +336,9 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
   }
 }
 
+
+void MainWindow::on_actionConnect_SQL_triggered()
+{
+   LoginWindowDialog log(0);
+   log.show();
+}

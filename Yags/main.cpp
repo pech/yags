@@ -5,14 +5,17 @@
 #include <QMessageBox>
 #include <QDebug>
 
-#include "mainwindow.h"
-#include "fenlogin.h"
+//#include "mainwindow.h"
+#include "loginwindowdialog.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    fenlogin fen(&w);
+    //MainWindow w;
+    //fenlogin fen(&w);
+    //FenLoginDialog fen(&w, 0);
+    //fen.exec();
+    LoginWindowDialog fen(0);
 
     //fenlogin fen;
 
@@ -52,5 +55,6 @@ int main(int argc, char *argv[])
     fen.show();
 
     //w.show();
+    a.connect(&a, SIGNAL( lastWindowClosed() ) , &a, SLOT(quit()));
     return a.exec();
 }
