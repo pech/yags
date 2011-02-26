@@ -6,11 +6,16 @@
 #include <QDebug>
 
 #include "mainwindow.h"
+#include "fenlogin.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
+    fenlogin fen(&w);
+
+    //fenlogin fen;
+
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
     db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mdb)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
     if ( !db.open() ) {
@@ -42,7 +47,10 @@ int main(int argc, char *argv[])
                    "'<qt>Research Station<br/>Base Camp<br/>"
                    "Big Mountain</qt>', 103)");
 
-    w.setWindowState(w.windowState() ^ Qt::WindowMaximized);
-    w.show();
+    //w.setWindowState(w.windowState() ^ Qt::WindowMaximized);
+
+    fen.show();
+
+    //w.show();
     return a.exec();
 }

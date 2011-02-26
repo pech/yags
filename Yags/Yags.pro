@@ -11,11 +11,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    fenlogin.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    fenlogin.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    fenlogin.ui
 
 RESOURCES += \
     ressource.qrc
