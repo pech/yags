@@ -337,8 +337,3 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 }
 
 
-void MainWindow::on_actionConnect_SQL_triggered()
-{
-   LoginWindowDialog log(0);
-   log.show();
-}

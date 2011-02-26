@@ -11,15 +11,12 @@ LoginWindowDialog::LoginWindowDialog(QWidget *parent) :
 
 LoginWindowDialog::~LoginWindowDialog()
 {
-    ///delete ui;
+    delete ui;
 }
 
 void LoginWindowDialog::on_pushButton_clicked()
 {
-
-    //btn = this->ui->pushButton;
-    //QObject::connect(btn, SIGNAL(clicked()), btn, SLOT(close()));
-    MainWindow w;
-    w.setWindowState(w.windowState() ^ Qt::WindowMaximized);
-    w.show();
+    MainWindow *w = new MainWindow(this);
+    w->setWindowState(w->windowState() ^ Qt::WindowMaximized);
+    w->show();
 }
