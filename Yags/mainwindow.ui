@@ -34,7 +34,9 @@
     <property name="title">
      <string>&amp;Fichier</string>
     </property>
-    <addaction name="actionNouveau"/>
+    <addaction name="actionSeconnecter"/>
+    <addaction name="actionSe_d_connecter"/>
+    <addaction name="separator"/>
     <addaction name="actionOuvrir"/>
     <addaction name="actionEnregisrer"/>
     <addaction name="actionEnregistrer_sous"/>
@@ -116,9 +118,12 @@
    <addaction name="actionZoom_Avant"/>
    <addaction name="actionZoom_Arri_re"/>
   </widget>
-  <action name="actionNouveau">
+  <action name="actionSeconnecter">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
-    <string>&amp;Nouveau</string>
+    <string>Se connecter</string>
    </property>
   </action>
   <action name="actionOuvrir">
@@ -225,6 +230,14 @@
   <action name="actionA_propos">
    <property name="text">
     <string>A propos...</string>
+   </property>
+  </action>
+  <action name="actionSe_d_connecter">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Se déconnecter</string>
    </property>
   </action>
  </widget>

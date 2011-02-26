@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sat 26. Feb 16:58:10 2011
+** Created: Sat 26. Feb 22:27:01 2011
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -27,7 +27,7 @@ QT_BEGIN_NAMESPACE
 class Ui_MainWindow
 {
 public:
-    QAction *actionNouveau;
+    QAction *actionSeconnecter;
     QAction *actionOuvrir;
     QAction *actionEnregisrer;
     QAction *actionEnregistrer_sous;
@@ -39,6 +39,7 @@ public:
     QAction *actionZoom_Arri_re;
     QAction *actionAide;
     QAction *actionA_propos;
+    QAction *actionSe_d_connecter;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFichier;
@@ -61,8 +62,9 @@ public:
         icon.addFile(QString::fromUtf8(":/ICO_Home.gif"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
         MainWindow->setDockOptions(QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::VerticalTabs);
-        actionNouveau = new QAction(MainWindow);
-        actionNouveau->setObjectName(QString::fromUtf8("actionNouveau"));
+        actionSeconnecter = new QAction(MainWindow);
+        actionSeconnecter->setObjectName(QString::fromUtf8("actionSeconnecter"));
+        actionSeconnecter->setEnabled(true);
         actionOuvrir = new QAction(MainWindow);
         actionOuvrir->setObjectName(QString::fromUtf8("actionOuvrir"));
         QIcon icon1;
@@ -107,6 +109,9 @@ public:
         actionAide->setObjectName(QString::fromUtf8("actionAide"));
         actionA_propos = new QAction(MainWindow);
         actionA_propos->setObjectName(QString::fromUtf8("actionA_propos"));
+        actionSe_d_connecter = new QAction(MainWindow);
+        actionSe_d_connecter->setObjectName(QString::fromUtf8("actionSe_d_connecter"));
+        actionSe_d_connecter->setEnabled(false);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -145,7 +150,9 @@ public:
         menuBar->addAction(menuOption->menuAction());
         menuBar->addAction(menuAffichage->menuAction());
         menuBar->addAction(menuAide->menuAction());
-        menuFichier->addAction(actionNouveau);
+        menuFichier->addAction(actionSeconnecter);
+        menuFichier->addAction(actionSe_d_connecter);
+        menuFichier->addSeparator();
         menuFichier->addAction(actionOuvrir);
         menuFichier->addAction(actionEnregisrer);
         menuFichier->addAction(actionEnregistrer_sous);
@@ -177,7 +184,7 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Yags", 0, QApplication::UnicodeUTF8));
-        actionNouveau->setText(QApplication::translate("MainWindow", "&Nouveau", 0, QApplication::UnicodeUTF8));
+        actionSeconnecter->setText(QApplication::translate("MainWindow", "Se connecter", 0, QApplication::UnicodeUTF8));
         actionOuvrir->setText(QApplication::translate("MainWindow", "&Ouvrir...", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_STATUSTIP
         actionOuvrir->setStatusTip(QApplication::translate("MainWindow", "Open file", 0, QApplication::UnicodeUTF8));
@@ -196,6 +203,7 @@ public:
         actionZoom_Arri_re->setShortcut(QApplication::translate("MainWindow", "-", 0, QApplication::UnicodeUTF8));
         actionAide->setText(QApplication::translate("MainWindow", "Aide", 0, QApplication::UnicodeUTF8));
         actionA_propos->setText(QApplication::translate("MainWindow", "A propos...", 0, QApplication::UnicodeUTF8));
+        actionSe_d_connecter->setText(QApplication::translate("MainWindow", "Se d\303\251connecter", 0, QApplication::UnicodeUTF8));
         menuFichier->setTitle(QApplication::translate("MainWindow", "&Fichier", 0, QApplication::UnicodeUTF8));
         menuEdition->setTitle(QApplication::translate("MainWindow", "Edition", 0, QApplication::UnicodeUTF8));
         menuVue->setTitle(QApplication::translate("MainWindow", "Vue", 0, QApplication::UnicodeUTF8));

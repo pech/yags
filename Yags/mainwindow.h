@@ -18,6 +18,18 @@
 
 #include <QEvent>
 
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlError>
+#include <QtSql/QSqlQuery>
+#include <QMessageBox>
+#include <QDebug>
+
+#include <QVBoxLayout>
+#include <QDialog>
+#include <QLineEdit>
+#include <QPushButton>
+
+
 namespace Ui {
     class MainWindow;
 }
@@ -55,10 +67,20 @@ private:
     QGraphicsView *view;
     QGraphicsScene *scene;
 
+    QLineEdit *loginBox;
+    QLineEdit *passwordBox;
+    QPushButton *buttonLogin;
+    bool isLog; // est connecté
+    bool isAdmin; // est admin
+    QDialog *loginFenetre;
+    QDialog *loginFenetreResultat;
+
+
     bool eventFilter(QObject * obj, QEvent * event);
     //bool eventFilter(QObject *obj, QWheelEvent *event);
 
 private slots:
+    void on_actionSeconnecter_triggered();
     void on_actionGaussien_triggered();
     void on_actionMoyen_triggered();
     void on_actionA_propos_triggered();
@@ -68,6 +90,8 @@ private slots:
     void on_actionZoom_Avant_triggered();
     void on_actionOuvrir_triggered();
     void on_actionQuitter_triggered();
+    void connection();
+    void closeLoginFenetre();
 };
 
 #endif // MAINWINDOW_H

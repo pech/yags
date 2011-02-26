@@ -1,7 +1,6 @@
 #include "loginwindowdialog.h"
 #include "ui_loginwindowdialog.h"
 #include "mainwindow.h"
-
 #include <QtSql/QSqlDatabase>
 #include <QtSql/QSqlError>
 #include <QtSql/QSqlQuery>

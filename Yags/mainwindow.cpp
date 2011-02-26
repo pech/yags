@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 //#include "ScrollArea.h"
 #include "ui_mainwindow.h"
-#include "loginwindowdialog.h"
+//#include "loginwindowdialog.h"
+
+#include <QSqlTableModel>
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,35 +13,68 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     zoom_active = false;
 
-    view = new QGraphicsView(ui->centralWidget);
-    scene = new QGraphicsScene(QRect(0, 0, 400*2, 200*2));
-    view->setScene(scene);
-    view->setGeometry(QRect(0, 0, 400*2, 200*2));
-    view->setDragMode(QGraphicsView::ScrollHandDrag);
-
-    view->setFocusPolicy(Qt::NoFocus);
-
-    view->show();
-
     imageLabel = new QLabel;
-    imageLabel->setBackgroundRole(QPalette::Dark);
-    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-    imageLabel->setScaledContents(true);
+        imageLabel->setBackgroundRole(QPalette::Dark);
+        imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+        imageLabel->setScaledContents(true);
 
-    scene->addWidget(imageLabel);
+        scrollArea = new QScrollArea;
+        scrollArea->setBackgroundRole(QPalette::Dark);
+        scrollArea->setWidget(imageLabel);
+        setCentralWidget(scrollArea);
 
-    //verticalScrollBar()->installEventFilter(this);
-    //horizontalScrollBar()->installEventFilter(this);
-    scrollArea = new QScrollArea;
-    scrollArea->setBackgroundRole(QPalette::Dark);
+    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
 
-    scrollArea->verticalScrollBar()->setEnabled(false);
-    scrollArea->horizontalScrollBar()->setEnabled(false);
+    //db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mbd)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
+    db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mdb)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
 
-    scrollArea->setWidget(view);
+    if ( !db.open() ) {
+        QMessageBox::critical(0, qApp->tr("Cannot open database"),
+             qApp->tr("Unable to establish a database connection.n"
+                      "This example needs SQLite support. Please read "
+                      "the Qt SQL driver documentation for information how "
+                      "to build it.nn"
+                      "Click Cancel to exit."), QMessageBox::Cancel,
+                      QMessageBox::NoButton);
+             qDebug() << db.lastError();
+         //return false;
+    }
+
+    // test query
+
+    QSqlQuery query;
+
+    //        query.exec("create table user2 (id int primary key, "
+    //                   "login varchar(20), password varchar(20), address varchar(200), typeid int)");
+    //        query.exec("insert into user2 values(1, 'Alice', 'alice', "
+    //                   "'<qt>Alice@gmail.com', 101)");
+    //        query.exec("insert into user2 values(2, 'Bob', 'bob', "
+    //                   "'<qt>Bob@gmail.com', 102)");
+    //        query.exec("insert into user2 values(3, 'Carol', 'carol', "
+    //                   "'<qt>The Lighthouse</qt>', 103)");
+    //        query.exec("insert into user2 values(4, 'Donald', 'donald', "
+    //                   "'Donald@gmail.com', 101)");
+     //       query.exec("insert into user2 values(5, 'Emma', 'emma', "
+    //                   "'<qt>Emma@gmail.com</qt>', 103)");
 
 
-    setCentralWidget(scrollArea);
+                    loginBox = new QLineEdit;
+                    passwordBox = new QLineEdit;
+                    passwordBox->setEchoMode(QLineEdit::Password);
+                    buttonLogin = new QPushButton("Se connecter");
+                    isLog = false;
+                    isAdmin = false;
+
+                    QVBoxLayout *layout = new QVBoxLayout;
+                    layout->addWidget(loginBox);
+                    layout->addWidget(passwordBox);
+                    layout->addWidget(buttonLogin);
+
+                    loginFenetre = new QDialog(parent);
+                    loginFenetre->setLayout(layout);
+                    loginFenetreResultat = new QDialog(parent);
+
+                    connect(buttonLogin, SIGNAL(clicked()), this, SLOT(connection()));
 
 
 }
@@ -335,3 +371,58 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 }
 
 
+
+
+void MainWindow::connection()
+{
+    QHBoxLayout *layout = new QHBoxLayout;
+    QLabel *label = new QLabel;
+    QPushButton *button = new QPushButton;
+
+    QSqlTableModel model;
+
+    model.setTable("user2");
+    model.setFilter("login = '"+loginBox->text()+"' and password = '"+passwordBox->text()+"'");
+    model.select();
+
+     QMessageBox::information(this, tr("info"), loginBox->text() + " " + passwordBox->text() + " " + QString::number(model.rowCount()));
+
+     if (model.rowCount() > 0 ) {
+        isLog = true;
+        layout->addWidget(label);
+        label->setText("Connection reussie");
+        layout->addWidget(button);
+        button->setText("Ok");
+        connect(button, SIGNAL(clicked()), this, SLOT(closeLoginFenetre()));
+        this->ui->actionSe_d_connecter->setEnabled(true);
+        this->ui->actionSeconnecter->setEnabled(false);
+    }
+    else {
+       layout->addWidget(label);
+        label->setText("Echec connection");
+        layout->addWidget(button);
+        button->setText("Reessayer");
+        connect(button, SIGNAL(clicked()), this, SLOT(on_actionSeconnecter_triggered()));
+    }
+
+    loginFenetre->hide();
+    loginFenetreResultat->setLayout(layout);
+    loginFenetreResultat->show();
+}
+
+void MainWindow::closeLoginFenetre() {
+    loginFenetreResultat->hide();
+    loginBox->setText("");
+    passwordBox->setText("");
+    loginFenetre->hide();
+}
+
+
+
+void MainWindow::on_actionSeconnecter_triggered()
+{
+    loginFenetreResultat->hide();
+    loginBox->setText("");
+    passwordBox->setText("");
+    loginFenetre->show();
+}
