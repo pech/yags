@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun 27. Feb 13:03:37 2011
+** Created: Sun 27. Feb 19:29:52 2011
 **      by: Qt User Interface Compiler version 4.7.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,6 +40,8 @@ public:
     QAction *actionAide;
     QAction *actionA_propos;
     QAction *actionSe_d_connecter;
+    QAction *actionListe_User;
+    QAction *actionListe_Cartes;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuFichier;
@@ -113,6 +115,10 @@ public:
         actionSe_d_connecter = new QAction(MainWindow);
         actionSe_d_connecter->setObjectName(QString::fromUtf8("actionSe_d_connecter"));
         actionSe_d_connecter->setEnabled(false);
+        actionListe_User = new QAction(MainWindow);
+        actionListe_User->setObjectName(QString::fromUtf8("actionListe_User"));
+        actionListe_Cartes = new QAction(MainWindow);
+        actionListe_Cartes->setObjectName(QString::fromUtf8("actionListe_Cartes"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -163,6 +169,8 @@ public:
         menuFiltre->addAction(actionMedian);
         menuFiltre->addAction(actionMoyen);
         menuFiltre->addAction(actionGaussien);
+        menuOption->addAction(actionListe_User);
+        menuOption->addAction(actionListe_Cartes);
         menuAffichage->addAction(actionZoom_Avant);
         menuAffichage->addAction(actionZoom_Arri_re);
         menuAide->addAction(actionAide);
@@ -205,6 +213,8 @@ public:
         actionAide->setText(QApplication::translate("MainWindow", "Aide", 0, QApplication::UnicodeUTF8));
         actionA_propos->setText(QApplication::translate("MainWindow", "A propos...", 0, QApplication::UnicodeUTF8));
         actionSe_d_connecter->setText(QApplication::translate("MainWindow", "Se d\303\251connecter", 0, QApplication::UnicodeUTF8));
+        actionListe_User->setText(QApplication::translate("MainWindow", "Liste User", 0, QApplication::UnicodeUTF8));
+        actionListe_Cartes->setText(QApplication::translate("MainWindow", "Liste Cartes", 0, QApplication::UnicodeUTF8));
         menuFichier->setTitle(QApplication::translate("MainWindow", "&Fichier", 0, QApplication::UnicodeUTF8));
         menuEdition->setTitle(QApplication::translate("MainWindow", "Edition", 0, QApplication::UnicodeUTF8));
         menuVue->setTitle(QApplication::translate("MainWindow", "Vue", 0, QApplication::UnicodeUTF8));

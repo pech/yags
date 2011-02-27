@@ -2,8 +2,6 @@
 //#include "bdd.h"
 #include "ui_mainwindow.h"
 
-//
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -51,6 +49,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(buttonLogin, SIGNAL(clicked()), this, SLOT(connection()));
 
+    isUser = -1;
+    idUser = -1;
+    idProjet = 0;
 
 }
 
@@ -345,21 +346,54 @@ void MainWindow::connection()
     QLabel *label = new QLabel;
     QPushButton *button = new QPushButton;
 
-    QSqlTableModel model;
+    QSqlTableModel modelUser;
+    QSqlTableModel modelAdmin;
 
-    model.setTable("user");
-    model.setFilter("login = '"+loginBox->text()+"' and password = '"+passwordBox->text()+"'");
-    model.select();
+    modelUser.setTable("user");
+    modelUser.setFilter("login = '"+loginBox->text()+"' and password = '"+passwordBox->text()+"'");
 
-    int numrow = model.rowCount();
+    modelAdmin.setTable("admin");
+    modelAdmin.setFilter("login = '"+loginBox->text()+"' and password = '"+passwordBox->text()+"'");
 
-     QMessageBox::information(this, tr("info"), loginBox->text() + " " + passwordBox->text() + " " + QString::number(numrow));
+
+    modelUser.select();
+    modelAdmin.setEditStrategy(QSqlTableModel::OnManualSubmit);
+    modelAdmin.select();
+
+    int numrowUser = modelUser.rowCount();
+    int numrowAdmin = modelAdmin.rowCount();
+    //QMessageBox::information(this, tr("info"), loginBox->text() + " " + passwordBox->text() + " " + QString::number(numrowAdmin) + " " + QString::number(numrowUser));
+    int numrow = 0;
+
+    //QSqlQuery query;
+
+    if (numrowAdmin > 0) {
+        //query.exec("select id from admin where login = '"+loginBox->text()+"' and pasword = '"+passwordBox->text()+"'");
+        //idUser = query.value(0).toInt();
+        for (int i = 0; i < numrowAdmin; i++) {
+            QSqlRecord record = modelAdmin.record(i);
+            idUser = record.value("id").toInt();
+        }
+        //QMessageBox::information(this, QObject::tr("info"), " id :::: " + QString::number(idUser) );
+        numrow = numrowAdmin;
+        isUser = 0;
+
+    }
+
+    else if (numrowUser > 0){
+        //query.exec("select id from user where login = '"+loginBox->text()+"' and pasword = '"+passwordBox->text()+"'");
+        //idUser = query.value(0).toInt();
+        numrow = numrowUser;
+        isUser = 1;
+    }
+
+     //QMessageBox::information(this, tr("info"), loginBox->text() + " " + passwordBox->text() + " " + QString::number(numrow));
 
      if (numrow > 0 ) {
         isLog = true;
         //label->setText("Connection reussie");
-        layout->addWidget(label);
-        layout->addWidget(button);
+        //layout->addWidget(label);
+        //layout->addWidget(button);
         //button->setText("Ok");
         connect(button, SIGNAL(clicked()), this, SLOT(closeLoginFenetre()));
         this->ui->actionSe_d_connecter->setEnabled(true);
@@ -371,9 +405,11 @@ void MainWindow::connection()
     else {
 
         //label->setText("Echec connection");
-        layout->addWidget(label);
+        //layout->addWidget(label);
         layout->addWidget(button);
+        loginFenetreResultat->setLayout(layout);
         button->setText("Reessayer");
+        loginFenetreResultat->show();
         connect(button, SIGNAL(clicked()), this, SLOT(on_actionSeconnecter_triggered()));
         //layout->removeWidget(label);
     }
@@ -381,7 +417,7 @@ void MainWindow::connection()
 
     loginFenetre->hide();
     loginFenetreResultat->setLayout(layout);
-    loginFenetreResultat->show();
+    //loginFenetreResultat->show();
     layout->removeWidget(label);
 
 }
@@ -393,8 +429,6 @@ void MainWindow::closeLoginFenetre() {
     loginFenetre->hide();
 
 }
-
-
 
 void MainWindow::on_actionSeconnecter_triggered()
 {
@@ -440,4 +474,21 @@ void MainWindow::on_actionEnregisrer_triggered()
         }
 
     }
+     idProjet++;
+     QSqlQuery query;
+
+     query.exec("insert into maps values("+QString::number(idProjet)+", '"+QString(fileBox->text())+"', '"+QString(FileSave)+"', "+QString::number(idUser)+")");
+
+}
+
+void MainWindow::on_actionListe_User_triggered()
+{
+    bdd->listerUser();
+    QMessageBox::information(this, "Liste User", bdd->listeUser);
+}
+
+void MainWindow::on_actionListe_Cartes_triggered()
+{
+    bdd->listerProjet();
+    QMessageBox::information(this, "Liste Projet", bdd->listeProjet);
 }

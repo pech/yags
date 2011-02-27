@@ -44,5 +44,86 @@ void BDD::Connexion ()
     //query.exec("insert into user values(5, 'Emma', 'emma', "
     //           "'<qt>Emma@gmail.com</qt>', 1)");
 
+    //QSqlQuery query;
+
+    //query.exec("create table projet (id int primary key, "
+    //           "adresse varchar(20), typeid int)");
+
+
+    QSqlQuery query;
+
+
+    query.exec("create table maps (id INT PRIMARY KEY, nomcarte VARCHAR(20), emplacement VARCHAR(200), typeid int)");
+
+    query.exec("create table admin (id int primary key, "
+               "login varchar(20), password varchar(20), address varchar(200), typeid int)");
+    query.exec("insert into admin values(1, 'admin', 'admin', "
+               "'<qt>Alice@gmail.com', 0)");
+    query.exec("insert into admin values(2, 'admin2', 'admin2', "
+               "'<qt>Bob@gmail.com', 0)");
+    query.exec("insert into admin values(3, 'admin3', 'admin3', "
+               "'<qt>The Lighthouse</qt>', 0)");
+    query.exec("insert into admin values(4, 'admin4', 'admin4', "
+               "'Donald@gmail.com', 0)");
+    query.exec("insert into admin values(5, 'admin5', 'admin5', "
+               "'<qt>Emma@gmail.com</qt>', 0)");
 
 }
+
+void BDD::listerUser(){
+    if (db.open())
+    {
+
+        QSqlTableModel modelUser;
+        modelUser.setTable("user");
+        //modelUser.setFilter("login = '"+loginBox->text()+"' and password = '"+passwordBox->text()+"'");
+        modelUser.setEditStrategy(QSqlTableModel::OnManualSubmit);
+        modelUser.select();
+
+        int numrow = modelUser.rowCount();
+
+        listeUser = "Liste des Utilisateurs : \n\n";
+
+        for (int i = 0; i < numrow; i++) {
+            QSqlRecord record = modelUser.record(i);
+            QString login = record.value("login").toString();
+            QString adresse = record.value("address").toString();
+
+            listeUser += "Login : " + login + ", Adresse  : " + adresse + "\n ";
+
+        }
+    }
+}
+
+void BDD::listerProjet(){
+    if (db.open())
+    {
+
+        QSqlTableModel modelMaps;
+        modelMaps.setTable("maps");
+        modelMaps.setEditStrategy(QSqlTableModel::OnManualSubmit);
+        modelMaps.select();
+
+        int numrow = modelMaps.rowCount();
+
+        listeProjet = "Liste des Cartes : \n\n";
+
+        for (int i = 0; i < numrow; i++) {
+            QSqlRecord record = modelMaps.record(i);
+            //int id = record.value("id").toInt();
+            QString name_carte = record.value("nomcarte").toString();
+            QString emplacement = record.value("emplacement").toString();
+            //int isUser = record.value("typeid").toInt();
+
+
+
+            //QObject::tr("Information récupérée"),"Login : " + login + "\n Adresse  : " + adresse + "\n ";
+
+            listeProjet += "Carte : " + name_carte + ", Chemin  : " + emplacement + "\n ";
+
+        }
+        //QMessageBox::information(QWidget::, listeUser);
+    }
+
+}
+

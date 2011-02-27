@@ -8,14 +8,22 @@
 #include <QMessageBox>
 #include <QDebug>
 
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QMessageBox>
+
 
 class BDD {
 public:
     BDD();
     ~BDD();
     void Connexion ();
+    void listerUser ();
+    void listerProjet ();
 
     QSqlDatabase db;
+    QString listeUser;
+    QString listeProjet;
 };
 
 

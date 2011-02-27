@@ -71,6 +71,8 @@
     <property name="title">
      <string>Option</string>
     </property>
+    <addaction name="actionListe_User"/>
+    <addaction name="actionListe_Cartes"/>
    </widget>
    <widget class="QMenu" name="menuAffichage">
     <property name="title">
@@ -128,7 +130,7 @@
   </action>
   <action name="actionOuvrir">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="icon">
     <iconset resource="ressource.qrc">
@@ -241,6 +243,19 @@
    </property>
    <property name="text">
     <string>Se déconnecter</string>
+   </property>
+  </action>
+  <action name="actionListe_User">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Liste User</string>
+   </property>
+  </action>
+  <action name="actionListe_Cartes">
+   <property name="text">
+    <string>Liste Cartes</string>
    </property>
   </action>
  </widget>

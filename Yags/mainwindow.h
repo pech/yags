@@ -28,6 +28,7 @@
 #include <QPushButton>
 
 #include <QSqlTableModel>
+#include <QSqlRecord>
 
 #include "bdd.h"
 
@@ -95,8 +96,13 @@ private:
     bool eventFilter(QObject * obj, QEvent * event);
     //bool eventFilter(QObject *obj, QWheelEvent *event);
 
+    int idUser;
+    int isUser;
+    int idProjet;
+
 private slots:
-    //void on_actionEnregisrer_triggered();
+    void on_actionListe_Cartes_triggered();
+    void on_actionListe_User_triggered();
     void on_actionEnregisrer_triggered();
     void on_actionSe_d_connecter_triggered();
     void on_actionSeconnecter_triggered();
