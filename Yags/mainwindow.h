@@ -18,9 +18,7 @@
 
 #include <QEvent>
 
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlQuery>
+
 #include <QMessageBox>
 #include <QDebug>
 
@@ -29,7 +27,9 @@
 #include <QLineEdit>
 #include <QPushButton>
 
+#include <QSqlTableModel>
 
+#include "bdd.h"
 
 
 namespace Ui {
@@ -80,7 +80,9 @@ private:
     QDialog *loginFenetre;
     QDialog *loginFenetreResultat;
 
-    QSqlDatabase db;
+    //QSqlDatabase db;
+
+    BDD *bdd;
 
     QString fileName;
     QString FileName;

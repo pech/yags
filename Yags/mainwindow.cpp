@@ -1,7 +1,8 @@
 #include "mainwindow.h"
+//#include "bdd.h"
 #include "ui_mainwindow.h"
 
-#include <QSqlTableModel>
+//
 
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -346,7 +347,7 @@ void MainWindow::connection()
 
     QSqlTableModel model;
 
-    model.setTable("user2");
+    model.setTable("user");
     model.setFilter("login = '"+loginBox->text()+"' and password = '"+passwordBox->text()+"'");
     model.select();
 
@@ -397,40 +398,8 @@ void MainWindow::closeLoginFenetre() {
 
 void MainWindow::on_actionSeconnecter_triggered()
 {
-    db = QSqlDatabase::addDatabase("QODBC");
-
-    db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mdb)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
-
-    if ( !db.open() ) {
-        QMessageBox::critical(0, qApp->tr("Cannot open database"),
-             qApp->tr("Unable to establish a database connection.n"
-                      "This example needs SQLite support. Please read "
-                      "the Qt SQL driver documentation for information how "
-                      "to build it.nn"
-                      "Click Cancel to exit."), QMessageBox::Cancel,
-                      QMessageBox::NoButton);
-             qDebug() << db.lastError();
-         //return false;
-    }
-
-
-    //test query
-
-    //QSqlQuery query;
-
-    //query.exec("create table user (id int primary key, "
-    //           "login varchar(20), password varchar(20), address varchar(200), typeid int)");
-    //query.exec("insert into user values(1, 'Alice', 'alice', "
-    //           "'<qt>Alice@gmail.com', 1)");
-    //query.exec("insert into user values(2, 'Bob', 'bob', "
-    //           "'<qt>Bob@gmail.com', 1)");
-    //query.exec("insert into user values(3, 'Carol', 'carol', "
-    //           "'<qt>The Lighthouse</qt>', 1)");
-    //query.exec("insert into user values(4, 'Donald', 'donald', "
-    //           "'Donald@gmail.com', 1)");
-    //query.exec("insert into user values(5, 'Emma', 'emma', "
-    //           "'<qt>Emma@gmail.com</qt>', 1)");
-
+    bdd = new BDD;
+    bdd->Connexion();
     loginFenetreResultat->hide();
     loginBox->setText("");
     passwordBox->setText("");
@@ -440,7 +409,7 @@ void MainWindow::on_actionSeconnecter_triggered()
 
 void MainWindow::on_actionSe_d_connecter_triggered()
 {
-    db.close();
+    bdd->db.close();
     this->ui->actionSe_d_connecter->setEnabled(false);
     this->ui->actionSeconnecter->setEnabled(true);
     this->ui->actionOuvrir->setEnabled(false);
