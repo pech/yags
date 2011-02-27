@@ -14,35 +14,32 @@ MainWindow::MainWindow(QWidget *parent) :
     zoom_active = false;
 
     imageLabel = new QLabel;
-        imageLabel->setBackgroundRole(QPalette::Dark);
-        imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
-        imageLabel->setScaledContents(true);
+    imageLabel->setBackgroundRole(QPalette::Dark);
+    imageLabel->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    imageLabel->setScaledContents(true);
 
-        scrollArea = new QScrollArea;
-        scrollArea->setBackgroundRole(QPalette::Dark);
-        scrollArea->setWidget(imageLabel);
-        setCentralWidget(scrollArea);
+    scrollArea = new QScrollArea;
+    scrollArea->setBackgroundRole(QPalette::Dark);
+    scrollArea->setWidget(imageLabel);
+    setCentralWidget(scrollArea);
 
+    loginBox = new QLineEdit;
+    passwordBox = new QLineEdit;
+    passwordBox->setEchoMode(QLineEdit::Password);
+    buttonLogin = new QPushButton("Se connecter");
+    isLog = false;
+    isAdmin = false;
 
+    QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(loginBox);
+    layout->addWidget(passwordBox);
+    layout->addWidget(buttonLogin);
 
-                    loginBox = new QLineEdit;
-                    passwordBox = new QLineEdit;
-                    passwordBox->setEchoMode(QLineEdit::Password);
-                    buttonLogin = new QPushButton("Se connecter");
-                    isLog = false;
-                    isAdmin = false;
+    loginFenetre = new QDialog(parent);
+    loginFenetre->setLayout(layout);
+    loginFenetreResultat = new QDialog(parent);
 
-                    QVBoxLayout *layout = new QVBoxLayout;
-                    layout->addWidget(loginBox);
-                    layout->addWidget(passwordBox);
-                    layout->addWidget(buttonLogin);
-
-                    loginFenetre = new QDialog(parent);
-                    loginFenetre->setLayout(layout);
-                    loginFenetreResultat = new QDialog(parent);
-
-                    connect(buttonLogin, SIGNAL(clicked()), this, SLOT(connection()));
-
+    connect(buttonLogin, SIGNAL(clicked()), this, SLOT(connection()));
 
 }
 
@@ -86,10 +83,7 @@ void MainWindow::on_actionOuvrir_triggered()
         this->ui->actionEnregisrer->setEnabled(true);
         this->ui->actionZoom_Arri_re->setEnabled(true);
         this->ui->actionZoom_Avant->setEnabled(true);
-        //scrollArea->verticalScrollBar()->setEnabled(false);
-        //scrollArea->horizontalScrollBar()->setEnabled(false);
-        //QAbstractScrollArea::setVerticalScrollBarPolicy(verticalScrollBar);
-        //scrollArea->verticalScrollBar()->installEventFilter(this);
+
     }
 }
 
@@ -138,8 +132,11 @@ void MainWindow::on_actionEnregistrer_sous_triggered()
             FileNameSave.chop(fi.suffix().length());
             FileNameSave += "." + format.toLower();
         }
-        if ( !image.save(FileNameSave, format.toAscii().constData()) ) {
-            QMessageBox::information(this, "Image Save", QString("Unable to save %1.").arg(FileNameSave));
+        QString FileSave = "C:/Users/Belle/Documents/Median/"+fi.fileName();
+        QMessageBox::information(this, "Image Save", FileSave);
+
+        if ( !image.save(FileSave, format.toAscii().constData()) ) {
+            QMessageBox::information(this, "Image Save", QString("Unable to save %1.").arg(FileSave));
         }
     }
 }
@@ -323,11 +320,7 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 {
   if (event->type() == QEvent::Wheel) {
       if (zoom_active == true) {
-          //if (event->)
-          //if(event->delta()>0)
                       scaleImage(1.25);
-          //        else
-          //            scaleImage(0.8);
                   } else {
                        scaleImage(0.8);
                   }
@@ -357,29 +350,35 @@ void MainWindow::connection()
 
      QMessageBox::information(this, tr("info"), loginBox->text() + " " + passwordBox->text() + " " + QString::number(numrow));
 
-     if ((model.rowCount()) > 0 ) {
+     if (numrow > 0 ) {
         isLog = true;
         //label->setText("Connection reussie");
+        layout->addWidget(label);
+        layout->addWidget(button);
         //button->setText("Ok");
         connect(button, SIGNAL(clicked()), this, SLOT(closeLoginFenetre()));
         this->ui->actionSe_d_connecter->setEnabled(true);
         this->ui->actionSeconnecter->setEnabled(false);
         //label->setText("");
+        //layout->removeWidget(label);
+        this->ui->actionOuvrir->setEnabled(true);
     }
     else {
 
         //label->setText("Echec connection");
-        //layout->addWidget(label);
-        //layout->addWidget(button);
-        //button->setText("Reessayer");
+        layout->addWidget(label);
+        layout->addWidget(button);
+        button->setText("Reessayer");
         connect(button, SIGNAL(clicked()), this, SLOT(on_actionSeconnecter_triggered()));
+        //layout->removeWidget(label);
     }
-    layout->addWidget(label);
-    layout->addWidget(button);
+
 
     loginFenetre->hide();
     loginFenetreResultat->setLayout(layout);
     loginFenetreResultat->show();
+    layout->removeWidget(label);
+
 }
 
 void MainWindow::closeLoginFenetre() {
@@ -387,6 +386,7 @@ void MainWindow::closeLoginFenetre() {
     loginBox->setText("");
     passwordBox->setText("");
     loginFenetre->hide();
+
 }
 
 
@@ -432,7 +432,7 @@ void MainWindow::on_actionSeconnecter_triggered()
     loginBox->setText("");
     passwordBox->setText("");
     loginFenetre->show();
-    this->ui->actionOuvrir->setEnabled(true);
+
 }
 
 void MainWindow::on_actionSe_d_connecter_triggered()

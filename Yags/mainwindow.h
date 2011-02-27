@@ -30,6 +30,8 @@
 #include <QPushButton>
 
 
+
+
 namespace Ui {
     class MainWindow;
 }
@@ -77,11 +79,15 @@ private:
 
     QSqlDatabase db;
 
+    QString FileName;
+
+    //QFileInfo fi(FileNameSave);
 
     bool eventFilter(QObject * obj, QEvent * event);
     //bool eventFilter(QObject *obj, QWheelEvent *event);
 
 private slots:
+    //void on_actionEnregisrer_triggered();
     void on_actionSe_d_connecter_triggered();
     void on_actionSeconnecter_triggered();
     void on_actionGaussien_triggered();
