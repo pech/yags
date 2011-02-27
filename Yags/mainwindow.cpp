@@ -1,7 +1,5 @@
 #include "mainwindow.h"
-//#include "ScrollArea.h"
 #include "ui_mainwindow.h"
-//#include "loginwindowdialog.h"
 
 #include <QSqlTableModel>
 
@@ -23,6 +21,14 @@ MainWindow::MainWindow(QWidget *parent) :
     scrollArea->setWidget(imageLabel);
     setCentralWidget(scrollArea);
 
+    //Login
+    QLabel *fileBoxTextLogin = new QLabel;
+    QString texteLogin = "Login : ";
+    fileBoxTextLogin->setText(texteLogin);
+    QLabel *fileBoxTextPass = new QLabel;
+    QString textePass = "Password : ";
+    fileBoxTextPass->setText(textePass);
+
     loginBox = new QLineEdit;
     passwordBox = new QLineEdit;
 
@@ -32,7 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     isAdmin = false;
 
     QVBoxLayout *layout = new QVBoxLayout;
+    layout->addWidget(fileBoxTextLogin);
     layout->addWidget(loginBox);
+    layout->addWidget(fileBoxTextPass);
     layout->addWidget(passwordBox);
     layout->addWidget(buttonLogin);
 
@@ -41,8 +49,6 @@ MainWindow::MainWindow(QWidget *parent) :
     loginFenetreResultat = new QDialog(parent);
 
     connect(buttonLogin, SIGNAL(clicked()), this, SLOT(connection()));
-
-
 
 
 }
@@ -117,51 +123,27 @@ void MainWindow::on_actionZoom_Arri_re_triggered()
 
 void MainWindow::on_actionEnregistrer_sous_triggered()
 {
-    //QString filter;
-    //QList<QByteArray> formats = QImageWriter::supportedImageFormats();
-    //foreach (QString format, formats) {
-    //    filter += QString("%1 files (*.%2);;").arg(format.toUpper()).arg(format);
-    //}
-    //if ( filter.endsWith(";;") ){
-    //    filter.chop(2);
-    //}
 
-    //QString selectFilter;
-    //QString FileNameSave = QFileDialog::getSaveFileName(this, tr("Save"), QString(), tr("Image Files(*.png *.jpg *.bmp)"));
-    //if ( !FileNameSave.isEmpty() ) {
-    //    QString format = selectFilter.split(" ").at(0);
-    //    QFileInfo fi(FileNameSave);
-    //    if ( !fi.suffix().endsWith(format, Qt::CaseInsensitive) ) {
-    //        FileNameSave.chop(fi.suffix().length());
-    //        FileNameSave += "." + format.toLower();
-    //    }
-    //    QString FileSave = "C:/Users/Belle/Documents/Median/"+fi.fileName();
-    //    QMessageBox::information(this, "Image Save", FileSave);
-
-    //    if ( !image.save(FileSave, format.toAscii().constData()) ) {
-    //        QMessageBox::information(this, "Image Save", QString("Unable to save %1.").arg(FileSave));
-    //    }
-    //}
-
-    QLabel *fileBoxText = new QLabel;
     fileBox = new QLineEdit;
     fileBox->setText("");
+
+    QLabel *fileBoxText = new QLabel;
     QString texte = "Nom du fichier : ";
     fileBoxText->setText(texte);
-    QPushButton *buttonFile2 = new QPushButton("Enregistrer");
+
+    QPushButton *buttonFile = new QPushButton("Enregistrer");
 
     QVBoxLayout *layoutfile = new QVBoxLayout;
     layoutfile->addWidget(fileBoxText);
     layoutfile->addWidget(fileBox);
-    layoutfile->addWidget(buttonFile2);
+    layoutfile->addWidget(buttonFile);
 
-    //QDialog *fileFenetre2 = new QDialog(imageLabel, 0);
-    QDialog *fileFenetre2 = new QDialog(0);
-    fileFenetre2->setLayout(layoutfile);
+    QDialog *fileFenetre = new QDialog(0);
+    fileFenetre->setLayout(layoutfile);
 
-    connect(buttonFile2, SIGNAL(clicked()), this, SLOT(on_actionEnregisrer_triggered()));
+    connect(buttonFile, SIGNAL(clicked()), this, SLOT(on_actionEnregisrer_triggered()));
 
-    fileFenetre2->show();
+    fileFenetre->show();
     this->ui->actionEnregisrer->setEnabled(true);
 
 }
@@ -360,7 +342,6 @@ void MainWindow::connection()
 {
     QHBoxLayout *layout = new QHBoxLayout;
     QLabel *label = new QLabel;
-    //QLabel *label2 = new QLabel;
     QPushButton *button = new QPushButton;
 
     QSqlTableModel model;
@@ -418,7 +399,6 @@ void MainWindow::on_actionSeconnecter_triggered()
 {
     db = QSqlDatabase::addDatabase("QODBC");
 
-    //db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mbd)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
     db.setDatabaseName("DRIVER={Microsoft Access Driver (*.mdb)};FIL={MS Access};DBQ=C:/Users/Belle/Desktop/pa8/new3/Yags/Yags/bdd_yags.mdb");
 
     if ( !db.open() ) {
@@ -434,22 +414,22 @@ void MainWindow::on_actionSeconnecter_triggered()
     }
 
 
-    // test query
+    //test query
 
     //QSqlQuery query;
 
-    //        query.exec("create table user2 (id int primary key, "
-    //                   "login varchar(20), password varchar(20), address varchar(200), typeid int)");
-    //        query.exec("insert into user2 values(1, 'Alice', 'alice', "
-    //                   "'<qt>Alice@gmail.com', 101)");
-    //        query.exec("insert into user2 values(2, 'Bob', 'bob', "
-    //                   "'<qt>Bob@gmail.com', 102)");
-    //        query.exec("insert into user2 values(3, 'Carol', 'carol', "
-    //                   "'<qt>The Lighthouse</qt>', 103)");
-    //        query.exec("insert into user2 values(4, 'Donald', 'donald', "
-    //                   "'Donald@gmail.com', 101)");
-     //       query.exec("insert into user2 values(5, 'Emma', 'emma', "
-    //                   "'<qt>Emma@gmail.com</qt>', 103)");
+    //query.exec("create table user (id int primary key, "
+    //           "login varchar(20), password varchar(20), address varchar(200), typeid int)");
+    //query.exec("insert into user values(1, 'Alice', 'alice', "
+    //           "'<qt>Alice@gmail.com', 1)");
+    //query.exec("insert into user values(2, 'Bob', 'bob', "
+    //           "'<qt>Bob@gmail.com', 1)");
+    //query.exec("insert into user values(3, 'Carol', 'carol', "
+    //           "'<qt>The Lighthouse</qt>', 1)");
+    //query.exec("insert into user values(4, 'Donald', 'donald', "
+    //           "'Donald@gmail.com', 1)");
+    //query.exec("insert into user values(5, 'Emma', 'emma', "
+    //           "'<qt>Emma@gmail.com</qt>', 1)");
 
     loginFenetreResultat->hide();
     loginBox->setText("");
