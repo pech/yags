@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     loginBox = new QLineEdit;
     passwordBox = new QLineEdit;
+
     passwordBox->setEchoMode(QLineEdit::Password);
     buttonLogin = new QPushButton("Se connecter");
     isLog = false;
@@ -40,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
     loginFenetreResultat = new QDialog(parent);
 
     connect(buttonLogin, SIGNAL(clicked()), this, SLOT(connection()));
+
+
+
 
 }
 
@@ -67,7 +71,7 @@ void MainWindow::on_actionOuvrir_triggered()
         filter.chop(2);
     }
 
-    QString FileName = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::currentPath(), tr("Image Files(*.png *.jpg *.bmp)"));
+    FileName = QFileDialog::getOpenFileName(this, tr("Open File"), QDir::currentPath(), tr("Image Files(*.png *.jpg *.bmp)"));
     if ( !FileName.isEmpty() ) {
         image.load(FileName);
         if ( image.isNull() ) {
@@ -80,7 +84,6 @@ void MainWindow::on_actionOuvrir_triggered()
         imageLabel->resize(imageLabel->pixmap()->size());
         scaleFactor = 1.0;
         this->ui->actionEnregistrer_sous->setEnabled(true);
-        this->ui->actionEnregisrer->setEnabled(true);
         this->ui->actionZoom_Arri_re->setEnabled(true);
         this->ui->actionZoom_Avant->setEnabled(true);
 
@@ -114,31 +117,53 @@ void MainWindow::on_actionZoom_Arri_re_triggered()
 
 void MainWindow::on_actionEnregistrer_sous_triggered()
 {
-    QString filter;
-    QList<QByteArray> formats = QImageWriter::supportedImageFormats();
-    foreach (QString format, formats) {
-        filter += QString("%1 files (*.%2);;").arg(format.toUpper()).arg(format);
-    }
-    if ( filter.endsWith(";;") ){
-        filter.chop(2);
-    }
+    //QString filter;
+    //QList<QByteArray> formats = QImageWriter::supportedImageFormats();
+    //foreach (QString format, formats) {
+    //    filter += QString("%1 files (*.%2);;").arg(format.toUpper()).arg(format);
+    //}
+    //if ( filter.endsWith(";;") ){
+    //    filter.chop(2);
+    //}
 
-    QString selectFilter;
-    QString FileNameSave = QFileDialog::getSaveFileName(this, tr("Save"), QString(), tr("Image Files(*.png *.jpg *.bmp)"));
-    if ( !FileNameSave.isEmpty() ) {
-        QString format = selectFilter.split(" ").at(0);
-        QFileInfo fi(FileNameSave);
-        if ( !fi.suffix().endsWith(format, Qt::CaseInsensitive) ) {
-            FileNameSave.chop(fi.suffix().length());
-            FileNameSave += "." + format.toLower();
-        }
-        QString FileSave = "C:/Users/Belle/Documents/Median/"+fi.fileName();
-        QMessageBox::information(this, "Image Save", FileSave);
+    //QString selectFilter;
+    //QString FileNameSave = QFileDialog::getSaveFileName(this, tr("Save"), QString(), tr("Image Files(*.png *.jpg *.bmp)"));
+    //if ( !FileNameSave.isEmpty() ) {
+    //    QString format = selectFilter.split(" ").at(0);
+    //    QFileInfo fi(FileNameSave);
+    //    if ( !fi.suffix().endsWith(format, Qt::CaseInsensitive) ) {
+    //        FileNameSave.chop(fi.suffix().length());
+    //        FileNameSave += "." + format.toLower();
+    //    }
+    //    QString FileSave = "C:/Users/Belle/Documents/Median/"+fi.fileName();
+    //    QMessageBox::information(this, "Image Save", FileSave);
 
-        if ( !image.save(FileSave, format.toAscii().constData()) ) {
-            QMessageBox::information(this, "Image Save", QString("Unable to save %1.").arg(FileSave));
-        }
-    }
+    //    if ( !image.save(FileSave, format.toAscii().constData()) ) {
+    //        QMessageBox::information(this, "Image Save", QString("Unable to save %1.").arg(FileSave));
+    //    }
+    //}
+
+    QLabel *fileBoxText = new QLabel;
+    fileBox = new QLineEdit;
+    fileBox->setText("");
+    QString texte = "Nom du fichier : ";
+    fileBoxText->setText(texte);
+    QPushButton *buttonFile2 = new QPushButton("Enregistrer");
+
+    QVBoxLayout *layoutfile = new QVBoxLayout;
+    layoutfile->addWidget(fileBoxText);
+    layoutfile->addWidget(fileBox);
+    layoutfile->addWidget(buttonFile2);
+
+    //QDialog *fileFenetre2 = new QDialog(imageLabel, 0);
+    QDialog *fileFenetre2 = new QDialog(0);
+    fileFenetre2->setLayout(layoutfile);
+
+    connect(buttonFile2, SIGNAL(clicked()), this, SLOT(on_actionEnregisrer_triggered()));
+
+    fileFenetre2->show();
+    this->ui->actionEnregisrer->setEnabled(true);
+
 }
 
 void tri(int *tab) {
@@ -331,8 +356,6 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 }
 
 
-
-
 void MainWindow::connection()
 {
     QHBoxLayout *layout = new QHBoxLayout;
@@ -441,4 +464,31 @@ void MainWindow::on_actionSe_d_connecter_triggered()
     this->ui->actionSe_d_connecter->setEnabled(false);
     this->ui->actionSeconnecter->setEnabled(true);
     this->ui->actionOuvrir->setEnabled(false);
+}
+
+void MainWindow::on_actionEnregisrer_triggered()
+{
+    QString selectFilter;
+    QString FileSave;
+    //QString FileNameSave = QFileDialog::getSaveFileName(this, tr("Save"), QString(), tr("Image Files(*.png *.jpg *.bmp)"));
+    if ( !fileBox->text().isEmpty() ) {
+        QString format = selectFilter.split(" ").at(0);
+        QFileInfo fi(fileBox->text());
+        if ( !fi.suffix().endsWith(format, Qt::CaseInsensitive) ) {
+            fileBox->text().chop(fi.suffix().length());
+            fileBox->text() += "." + format.toLower();
+        }
+        if (!(fileBox->text().isNull())) {
+            FileSave = "C:/Users/Belle/Documents/Median/"+fileBox->text()+".png";
+            QMessageBox::information(this, "Image Save", FileSave);
+    }
+        else {
+            FileSave = "C:/Users/Belle/Documents/Median/"+FileName+".png";
+        }
+
+        if ( !image.save(FileSave, format.toAscii().constData()) ) {
+            QMessageBox::information(this, "Image Save", QString("Unable to save %1.").arg(FileSave));
+        }
+
+    }
 }

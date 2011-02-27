@@ -71,6 +71,9 @@ private:
 
     QLineEdit *loginBox;
     QLineEdit *passwordBox;
+    QLineEdit *fileBox;
+
+
     QPushButton *buttonLogin;
     bool isLog; // est connecté
     bool isAdmin; // est admin
@@ -79,7 +82,11 @@ private:
 
     QSqlDatabase db;
 
+    QString fileName;
     QString FileName;
+
+    //QPushButton *buttonFile;
+    //QDialog *fileFenetre;
 
     //QFileInfo fi(FileNameSave);
 
@@ -88,6 +95,7 @@ private:
 
 private slots:
     //void on_actionEnregisrer_triggered();
+    void on_actionEnregisrer_triggered();
     void on_actionSe_d_connecter_triggered();
     void on_actionSeconnecter_triggered();
     void on_actionGaussien_triggered();
