@@ -30,6 +30,8 @@
 #include <QSqlTableModel>
 #include <QSqlRecord>
 
+#include <QSplashScreen>
+
 #include "bdd.h"
 
 
@@ -101,6 +103,7 @@ private:
     int idProjet;
 
 private slots:
+    void on_actionAjout_User_triggered();
     void on_actionListe_Cartes_triggered();
     void on_actionListe_User_triggered();
     void on_actionEnregisrer_triggered();

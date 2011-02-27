@@ -71,6 +71,8 @@
     <property name="title">
      <string>Option</string>
     </property>
+    <addaction name="actionAjout_User"/>
+    <addaction name="separator"/>
     <addaction name="actionListe_User"/>
     <addaction name="actionListe_Cartes"/>
    </widget>
@@ -247,15 +249,26 @@
   </action>
   <action name="actionListe_User">
    <property name="enabled">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Liste User</string>
    </property>
   </action>
   <action name="actionListe_Cartes">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Liste Cartes</string>
+   </property>
+  </action>
+  <action name="actionAjout_User">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Ajout User</string>
    </property>
   </action>
  </widget>

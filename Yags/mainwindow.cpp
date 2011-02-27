@@ -70,7 +70,7 @@ void MainWindow::on_actionQuitter_triggered()
 void MainWindow::on_actionOuvrir_triggered()
 {
     QString filter;
-    QString selectFilter;
+   // QString selectFilter;
     QList<QByteArray> formats = QImageWriter::supportedImageFormats();
     foreach (QString format, formats) {
         filter += QString("%1 files(*.%2);;").arg(format.toUpper()).arg(format);
@@ -343,7 +343,6 @@ bool MainWindow::eventFilter(QObject * obj, QEvent * event)
 void MainWindow::connection()
 {
     QHBoxLayout *layout = new QHBoxLayout;
-    QLabel *label = new QLabel;
     QPushButton *button = new QPushButton;
 
     QSqlTableModel modelUser;
@@ -391,34 +390,26 @@ void MainWindow::connection()
 
      if (numrow > 0 ) {
         isLog = true;
-        //label->setText("Connection reussie");
-        //layout->addWidget(label);
-        //layout->addWidget(button);
-        //button->setText("Ok");
         connect(button, SIGNAL(clicked()), this, SLOT(closeLoginFenetre()));
         this->ui->actionSe_d_connecter->setEnabled(true);
         this->ui->actionSeconnecter->setEnabled(false);
         //label->setText("");
         //layout->removeWidget(label);
         this->ui->actionOuvrir->setEnabled(true);
+        this->ui->actionListe_User->setEnabled(true);
+        this->ui->actionAjout_User->setEnabled(true);
+        this->ui->actionListe_Cartes->setEnabled(true);
     }
     else {
-
-        //label->setText("Echec connection");
-        //layout->addWidget(label);
         layout->addWidget(button);
         loginFenetreResultat->setLayout(layout);
         button->setText("Reessayer");
         loginFenetreResultat->show();
         connect(button, SIGNAL(clicked()), this, SLOT(on_actionSeconnecter_triggered()));
-        //layout->removeWidget(label);
     }
 
 
     loginFenetre->hide();
-    loginFenetreResultat->setLayout(layout);
-    //loginFenetreResultat->show();
-    layout->removeWidget(label);
 
 }
 
@@ -491,4 +482,9 @@ void MainWindow::on_actionListe_Cartes_triggered()
 {
     bdd->listerProjet();
     QMessageBox::information(this, "Liste Projet", bdd->listeProjet);
+}
+
+void MainWindow::on_actionAjout_User_triggered()
+{
+    bdd->AjoutFenetre();
 }

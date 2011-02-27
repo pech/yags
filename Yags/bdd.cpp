@@ -127,3 +127,60 @@ void BDD::listerProjet(){
 
 }
 
+void BDD::AjoutFenetre(){
+    ajoutBox = new QLineEdit;
+    ajoutBox->setText("");
+
+    ajoutBoxpass = new QLineEdit;
+    ajoutBoxpass->setText("");
+
+    ajoutBoxaddress = new QLineEdit;
+    ajoutBoxaddress->setText("");
+
+    //ajoutBoxisuser = new QLineEdit;
+    //ajoutBoxisuser->setText("");
+
+    QLabel *ajoutBoxText = new QLabel;
+    QString texte = "Login : ";
+    ajoutBoxText->setText(texte);
+
+    QLabel *ajoutpassBoxText = new QLabel;
+    QString textepass = "Mot de passe : ";
+    ajoutpassBoxText->setText(textepass);
+
+    QLabel *ajoutaddressBoxText = new QLabel;
+    QString texteaddress = "Adresse e-mail : ";
+    ajoutaddressBoxText->setText(texteaddress);
+
+    //QLabel *ajoutisuserBoxText = new QLabel;
+    //QString textepass = "Mot de passe : ";
+    //ajoutpassBoxText->setText(textepass);
+
+    QPushButton *buttonFile = new QPushButton("Ajouter");
+
+    layoutfile = new QVBoxLayout;
+    layoutfile->addWidget(ajoutBoxText);
+    layoutfile->addWidget(ajoutBox);
+    layoutfile->addWidget(ajoutpassBoxText);
+    layoutfile->addWidget(ajoutBoxpass);
+    layoutfile->addWidget(ajoutaddressBoxText);
+    layoutfile->addWidget(ajoutBoxaddress);
+
+    layoutfile->addWidget(buttonFile);
+
+    fileFenetre = new QDialog(0);
+    fileFenetre->setLayout(layoutfile);
+
+    connect(buttonFile, SIGNAL(clicked()), this, SLOT(AjoutUser()));
+
+    fileFenetre->show();
+}
+
+void BDD::AjoutUser()
+{
+    QSqlQuery query;
+    query.exec("insert into user (login, password, address, typeid)  values('"+QString(ajoutBox->text())+"', '"+QString(ajoutBoxpass->text())+"' , '"+QString(ajoutBoxaddress->text())+"', 1)");
+
+    //QMessageBox::information(0,"dfgfdgdfg" , "dfgknqdfgn");
+    fileFenetre->hide();
+}
